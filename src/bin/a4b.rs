@@ -11,7 +11,7 @@
 // * Use an underscore (_) to match on any value
 
 fn main() {
-    let var = 1;
+    let var = 5;
     match var {
         1 => println!("one"),
         2 => println!("two"),
