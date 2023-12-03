@@ -24,4 +24,5 @@ fn main() {
     let judge = var > 100;
 
     print_message(judge);
+
 }
