@@ -20,7 +20,7 @@ fn print_number(number: Vec<i32>) {
     for value in &number {
         match value {
             30 => println!("thirty"),
-            _ => println!("{:?}", value),
+            other => println!("{:?}", other),
         }
     }
 
