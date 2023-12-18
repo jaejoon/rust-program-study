@@ -1,4 +1,5 @@
 
+/// Survey structure
 struct Survey {
     q1: Option<i32>,
     q2: Option<bool>,
@@ -6,6 +7,7 @@ struct Survey {
     q4: Option<i64>,
 }
 
+/// main function for printing survey responses
 fn main () {
     let response: Survey = Survey { 
         q1: Some(12), 
