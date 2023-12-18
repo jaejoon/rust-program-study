@@ -19,7 +19,9 @@ fn print_choice (choice: &MenuChoice) {
 }
 
 fn pick_choice (input: &str) -> Result<(), String> {
+    // pick
     let choice = get_choice(input)?;
+    // and print
     print_choice(&choice);
     Ok(())
 }
