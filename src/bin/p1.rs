@@ -18,29 +18,40 @@
 // * Create your program starting at level 1. Once finished, advance to the
 //   next level.
 
-use std::io;
+use std::{io, collections::HashMap};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Bill {
     name: String,
     amount: f64,
 }
 
 struct Bills {
-    inner: Vec<Bill>,
+    inner: HashMap<String, Bill>,
 }
 
 impl Bills {
     fn new () -> Self {
-        Self { inner: vec![] }
+        Self { inner: HashMap::new() }
     }
 
     fn add (&mut self, bill: Bill) {
-        self.inner.push(bill);
+        self.inner.insert(bill.name.clone(), bill);
     }
 
-    fn get_all(&self) -> &Vec<Bill> {
-        &self.inner
+    fn get_all(&self) -> Vec<Bill> {
+        let mut bills = vec![];
+        // for loop에서 bill은 자동으로 불변 참조(immutable reference)가 된다.
+        for bill in self.inner.values() {
+            bills.push(bill.clone());
+        }
+        //must return bills not &bills to prevent bills vector deleting when get_all function is closed
+        //so we must use return type to Vec<> not &Vec<> and return bills.
+        bills
+    }
+
+    fn remove (&mut self, name: &str) -> bool {
+        self.inner.remove(name).is_some()
     }
 }
 
@@ -80,6 +91,20 @@ fn add_bill_menu (bills: &mut Bills) {
     println!("Bill added");
 }
 
+fn remove_bill_menu(bills: &mut Bills) {
+    for bill in bills.get_all() {
+        println!("{:?}", bill);
+    }    
+
+    println!("Enter bill name to remove");
+    let input = get_input();
+    if bills.remove(&input) {
+        println!("Removed");
+    } else {
+        println!("Bill not found");
+    }
+}
+
 fn view_bills_menu (bills: &Bills) {
     for bill in bills.get_all() {
         println!("{:?}", bill);
@@ -92,6 +117,7 @@ fn main_menu () {
         println!("-- Manage Bills --");
         println!("1. Add bill");
         println!("2. View bill");
+        println!("3. Remove bill");
         println!("");
         println!("Enter selection:");
     }
@@ -105,6 +131,7 @@ fn main_menu () {
         match input.as_str() {
             "1" => add_bill_menu(&mut bills),
             "2" => view_bills_menu(&bills),
+            "3" => remove_bill_menu(&mut bills),
             _ => break,
         }
 
