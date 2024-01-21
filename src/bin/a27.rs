@@ -9,9 +9,18 @@
 // * Use `#[error("description")]` on the enum variants
 // * Use `#[from] ErrorType` to convert the existing errors into a `ProgramError`
 
+use std::error;
+
 use thiserror::Error;
 
-enum ProgramError {}
+#[derive(Debug, Error)]
+enum ProgramError {
+    #[error("menu error")]
+    Menu(#[from] MenuError),
+
+    #[error("math error")]
+    Math(#[from] MathError),
+}
 
 #[derive(Debug, Error)]
 enum MenuError {

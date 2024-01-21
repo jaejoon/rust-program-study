@@ -12,18 +12,22 @@ mod greet {
     }
 }
 
-pub mod math {
-    fn add(a: i32, b: i32) -> i32 {
+mod math {
+    pub fn add(a: i32, b: i32) -> i32 {
         a+b
     }
     
-    fn sub(a: i32, b: i32) -> i32 {
+    pub fn sub(a: i32, b: i32) -> i32 {
         a-b
     }
 }
 
 fn main() {
     use greet::*;
+    use math::*;
+    
     hello();
     goodbye();
+    add(1,2);
+    sub(3,1);
 }
